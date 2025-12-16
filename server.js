@@ -14,11 +14,13 @@ connectDB();
 const app = express()
 
 // Middleware
-app.use(express.json());
 app.use(cors({
-    origin: "*",
-    methods: ["GET", "POST", "PATCH", "DELETE", "PUT"]
+    origin: "*", 
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    credentials: true
 }));
+app.options('*', cors());
+app.use(express.json());
 
 // Routes
 app.use('/api/auth', authRoutes);
