@@ -4,14 +4,21 @@ const cors = require('cors');
 const connectDB = require('./config/db');
 
 dotenv.config();
-connectDB();
+
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (error) {
+    return res.status(500).json({ message: 'Database connection failed' });
+  }
+});
 
 const app = express();
 
 //  CORS 
 app.use(cors({
   origin: [
-    
     'https://event-hive-backend-litqjn8lk-pbs-alekhyas-projects.vercel.app'
   ],
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
@@ -29,7 +36,8 @@ app.use((req, res, next) => {
 app.use(cors({
   origin: 'https://event-hive-backend-litqjn8lk-pbs-alekhyas-projects.vercel.app',
 }));
-app.options('*', cors());
+
+
 app.use((req, res, next) => {
   console.log('METHOD:', req.method, 'PATH:', req.path);
   next();
