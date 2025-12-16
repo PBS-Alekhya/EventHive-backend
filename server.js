@@ -6,7 +6,7 @@ const app = express();
 
 app.use(cors({
   origin: 'https://event-hive-front-end.vercel.app',
-  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
