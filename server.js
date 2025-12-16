@@ -8,19 +8,35 @@ connectDB();
 
 const app = express();
 
-//  CORS FIRST
+//  CORS 
 app.use(cors({
   origin: [
-    'http://localhost:5000',
-    'http://localhost:5173',
+    
     'https://event-hive-backend-litqjn8lk-pbs-alekhyas-projects.vercel.app'
   ],
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
+app.use((req, res, next) => {
+  if (req.method === 'OPTIONS') {
+    res.header('Access-Control-Allow-Origin', 'https://event-hive-backend-litqjn8lk-pbs-alekhyas-projects.vercel.app');
+    res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    return res.sendStatus(204);
+  }
+  next();
+});
+app.use(cors({
+  origin: 'https://event-hive-backend-litqjn8lk-pbs-alekhyas-projects.vercel.app',
+}));
 app.options('*', cors());
+app.use((req, res, next) => {
+  console.log('METHOD:', req.method, 'PATH:', req.path);
+  next();
+});
 
-//  Body parser AFTER CORS
+
+//  
 app.use(express.json());
 
 // Routes
