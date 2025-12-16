@@ -23,8 +23,7 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
-// Enable preflight for all routes
-app.options('*', cors());
+
 
 /* -------------------- BODY PARSER -------------------- */
 
