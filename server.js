@@ -12,6 +12,8 @@ app.use(cors({
 
 app.use(express.json());
 
+app.options('/api/auth/signup', cors());
+
 //  Connect DB 
 app.use(async (req, res, next) => {
   try {
