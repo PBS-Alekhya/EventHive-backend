@@ -32,7 +32,15 @@ app.use(express.json());
 /* -------------------- DB CONNECTION -------------------- */
 
 // Connect once (serverless-safe)
-connectDB();
+app.use(async (req, res, next) => {
+  try {
+    await connectDB(); // Waits here until connected
+    next(); // Only then moves to the routes
+  } catch (error) {
+    console.error("Database Connection Failed:", error);
+    res.status(500).json({ error: "Service unavailable: Database error" });
+  }
+});
 
 /* -------------------- ROUTES -------------------- */
 
