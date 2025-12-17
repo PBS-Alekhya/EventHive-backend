@@ -33,6 +33,9 @@ app.use(express.json());
 
 // Connect once (serverless-safe)
 app.use(async (req, res, next) => {
+  if (req.method === 'OPTIONS') {
+    return next();
+  }
   try {
     await connectDB(); // Waits here until connected
     next(); // Only then moves to the routes
